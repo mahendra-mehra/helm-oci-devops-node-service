@@ -4,7 +4,7 @@ timeoutInSeconds: 6000
 runAs: root
 shell: bash
 env:
-  # these are local variables to the build config
+  # these are local variables to the build config.
   variables:
     key: "value"
 
