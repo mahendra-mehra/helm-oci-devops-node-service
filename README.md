@@ -139,7 +139,7 @@ The Deliver Artifacts stage **maps** the ouput Artifacts from the Managed Build 
 Add a **Deliver Artifacts** stage to your Build Pipeline after the **Managed Build** stage. To configure this stage:
 1. In your Deliver Artifacts stage, choose `Select Artifact` 
 1. From the list of artifacts select the `node-express-getting-started container` artifact that you created above
-1. In the next section, you'll assign the  container image outputArtifact from the `build_spec.yaml` to the DevOps project artifact. For the "Build config/result Artifact name" enter: `output01`
+1. In the next section, you'll assign the  container image outputArtifact from the `build_spec.yaml` to the DevOps project artifact. For the "Build config/result Artifact name" enter: `APPLICATION_DOCKER_IMAGE`
 
 ## Configure Build Parameters
 
