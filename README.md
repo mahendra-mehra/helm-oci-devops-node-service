@@ -71,13 +71,13 @@ In your Build Pipeline, first add a Managed Build stage
 ## Create a Container Registry repository
 
 Create a [Container Registry repository](https://docs.oracle.com/en-us/iaas/Content/Registry/Tasks/registrycreatingarepository.htm) for the `node-express-getting-started` container image built in the Managed Build stage. 
-1. You can name the repo: `node-service`. So if you create the repository in the Ashburn region, the path is iad.ocir.io/TENANCY-NAMESPACE/node-express-getting-started
+1. You can name the repo: `node-express-getting-started`. So if you create the repository in the Ashburn region, the path is iad.ocir.io/TENANCY-NAMESPACE/node-express-getting-started
 1. Set the repostiory access to public so that you can pull the container image without authorization, from OKE. Under "Actions", choose `Change to public`.
 
 ## Create a Container Registry Helm Repository
 
 Create a [Container Registry repository](https://docs.oracle.com/en-us/iaas/Content/Registry/Tasks/registrycreatingarepository.htm) for the `helm-repo` container image built in the Managed Build stage. 
-1. You can name the repo: `helm-repo`. So if you create the repository in the Ashburn region, the path is iad.ocir.io/TENANCY-NAMESPACE/node-service-helm-repo
+1. You can name the repo: `helm-repo/node-service`. So if you create the repository in the Ashburn region, the path is iad.ocir.io/TENANCY-NAMESPACE/helm-repo/node-service
 1. Set the repostiory access to public so that you can pull the container image without authorization, from OKE. Under "Actions", choose `Change to public`.
 
 ## Create a DevOps Artifact for your container image repository
@@ -87,7 +87,7 @@ The version of the container image that will be delivered to the OCI repository 
 Create a DevOps Artifact to point to the Container Registry repository location you just created above. Enter the information for the Artifact location:
 1. Name: node-express-getting-started container
 1. Type: Container image repository
-1. Path: `iad.ocir.io/TENANCY-NAMESPACE/node-service`
+1. Path: `iad.ocir.io/TENANCY-NAMESPACE/node-express-getting-started`
 1. Replace parameters: Yes
 
 Next, you'll set the container image tag to use the the Managed Build stage `exportedVariables:` name for the version of the container image to deliver in a run of a build pipeline. In the build_spec.yaml for this project, the variable name is: `BUILDRUN_HASH`
@@ -97,7 +97,7 @@ Next, you'll set the container image tag to use the the Managed Build stage `exp
 ```
 
 Edit the DevOps Artifact path to add the tag value as a parameter name.
-1. Path: `iad.ocir.io/TENANCY-NAMESPACE/node-service:${BUILDRUN_HASH}`
+1. Path: `iad.ocir.io/TENANCY-NAMESPACE/node-express-getting-started:${BUILDRUN_HASH}`
 
 Now create DevOps Artifact for `helm-repo` too.
 1. Name: `node-service-helm`
@@ -119,7 +119,7 @@ service:
   port: 80
 
 image:
-  repository: iad.ocir.io/TENANCY-NAMESPACE/node-service
+  repository: iad.ocir.io/TENANCY-NAMESPACE/node-express-getting-started
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ${BUILDRUN_HASH}
@@ -149,7 +149,7 @@ Add a **Deliver Artifacts** stage to your Build Pipeline after the **Managed Bui
 | -----------    | ---------- | --------|
 | USER_AUTH_TOKEN      | Auth token of the user who has access to OCIR. Refer [documentation](https://docs.oracle.com/en-us/iaas/Content/Registry/Tasks/registrygettingauthtoken.htm) to create token.   | |
 | HELM_REPO_USER   | User name to publish helm package to OCIR        | <TENANCY_NAME>/<USER_NAME> |
-| HELM_REPO_URL | OCIR helm repository URL | oci://iad.ocir.io/<TENANCY_NAME>/node-service-helm-repo |
+| HELM_REPO_URL | OCIR helm repository URL | oci://iad.ocir.io/<TENANCY_NAME>/helm-repo/node-service |
 | HELM_REPO | OCIR domain name | iad.ocir.io |
 
 # Run your Build in OCI DevOps
