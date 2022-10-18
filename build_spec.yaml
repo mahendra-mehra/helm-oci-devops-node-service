@@ -87,11 +87,11 @@ steps:
     name: "Build container image"
     command: |
       cd ${OCI_WORKSPACE_DIR}/node_express
-      docker build --pull --rm -t node-express-getting-starter .
+      docker build --pull --rm -t iad-dop-lab15-1-ocir-1/node-service .
 
 outputArtifacts:
   - name: APPLICATION_DOCKER_IMAGE
     type: DOCKER_IMAGE
     # this location tag doesn't effect the tag used to deliver the container image
     # to the Container Registry
-    location: node-express-getting-starter:latest
+    location: iad-dop-lab15-1-ocir-1/node-service:latest
